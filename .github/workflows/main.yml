@@ -10,7 +10,13 @@ pull_request:
 
    branches: [ "main"]
  
+ 
 workflow_dispatch:
+inputs:
+environment:
+description: "Environment to run test again"
+type : string
+required : true
 
 jobs:
 
