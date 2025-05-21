@@ -1,0 +1,27 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Comment on Pull Request
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  pull_request:
+  types: [opened,synchronize]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+ comment-job:
+ runs-on: ubuntu-latest
+    
+    steps:
+    
+      - name: Comment on Pull Request
+        env:
+        GITHUB_TOKEN:${{secrets.GH_PAT}}
+        run:
+        PR_NUMBER=${{github.event.pull_request.number}}
+        curl -X POST -H "Authorization: token $GITHUB_TOKEN"\
+        -d '{"body": "Thanks!"}'\
+        https://api.github.com/repos/PSJH-Dev/Devops.test/issues/$PR_NUMBER/comments
+
+      
