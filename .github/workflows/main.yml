@@ -1,27 +1,23 @@
-name: GITACTION
- 
 on:
-
-push:
-
-   branches: [ "main"]
-
-pull_request:
-
-   branches: [ "main"]
- 
 workflow_dispatch:
 
 jobs:
-
-  build:
-
+push-job:
     runs-on: ubuntu-latest
 
     steps:
-
-     - uses: actions/setup-node@v3.9.1
-
-     - name: Setup Node.js environment
-
-       run: Test action
+     - name: Checkout repository
+     - uses: actions/checkout@v2
+     
+    -name: Make Changes
+    run:
+     git config --global user.email "bbs.srnow@gmail.com"
+     git config --global user.name "muralibsy-git"
+     echo "New Changes" >> changes.txt
+     git add changes.txt
+     git commit -m "Add Changes"
+     - name: Push changes
+      env:
+      GITHUB_TOKEN:${{secrets.GH_PAT}}
+       run: 
+       git push origin feature -branch
